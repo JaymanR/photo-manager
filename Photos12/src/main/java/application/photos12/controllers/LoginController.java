@@ -8,14 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class LoginController {
 
     @FXML
-    private Button button;
+    private Button login;
 
     @FXML
     private TextField username;
@@ -24,7 +23,7 @@ public class LoginController {
         String name = username.getText();
         if (name.equals("admin")) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/application/photos12/admin.fxml"));
+            loader.setLocation(getClass().getResource("/application/photos12/view/admin.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
