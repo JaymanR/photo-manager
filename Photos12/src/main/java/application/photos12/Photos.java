@@ -6,31 +6,39 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
-import java.io.IOException;
-
 public class Photos extends Application implements Serializable {
-
-    private static Stage window;
+    @Serial
+    private static final long serialVersionUID = 1L;
+    public static Stage window;
     public static Scene login;
 
-    private ArrayList<User> users;
-    public static final String storeDir = "/application/photos12/dat";
-    public static final String storeFile = "photos.dat";
+    private static final String storeDir = "src/main/resources/application/photos12/dat/users";
+
+    private static List<User> users;
 
     public Photos () {
         users = new ArrayList<User>();
+        users.add(new User("stock"));
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void createUser(User u) {
+        users.add(u);
+    }
+
+    public static List<User> getUsers() {
+        return users;
+    }
+
+    public static Stage getStage() {
+        return window;
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
+        users = User.readUsers();
         startUp(primaryStage);
     }
     public static void changeScene(Scene scene) {
@@ -52,6 +60,10 @@ public class Photos extends Application implements Serializable {
         window.setTitle("Photos");
         window.setResizable(false);
         window.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
 

@@ -15,14 +15,14 @@
                <Font name="Lucida Sans Demibold Roman" size="18.0" />
             </font>
          </Label>
-         <ListView layoutX="13.0" layoutY="32.0" prefHeight="450.0" prefWidth="226.0" style="-fx-background-color: #24252a; -fx-border-color: white;" />
+         <ListView fx:id="listView" layoutX="13.0" layoutY="32.0" prefHeight="450.0" prefWidth="226.0" style="-fx-background-color: #24252a; -fx-border-color: white;" />
       </AnchorPane>
    </left>
    <right>
       <AnchorPane prefHeight="494.0" prefWidth="195.0" style="-fx-background-color: #24252a; -fx-background-radius: 25;" BorderPane.alignment="CENTER">
-         <Button fx:id="logout" onAction="#logout" layoutX="50.0" layoutY="455.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="91.0" text="Log out" />
-         <Button fx:id="createUser" onAction="#createUser" layoutX="57.0" layoutY="104.0" mnemonicParsing="false" text="Create User" />
-         <Button fx:id="deleteUser" onAction="#deleteUser" layoutX="56.0" layoutY="170.0" mnemonicParsing="false" text="Delete User" />
+         <Button fx:id="logout" layoutX="50.0" layoutY="455.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="91.0" text="Log out" />
+         <Button fx:id="createUser" layoutX="57.0" layoutY="104.0" mnemonicParsing="false" onAction="#createUser" text="Create User" />
+         <Button fx:id="deleteUser" layoutX="56.0" layoutY="170.0" mnemonicParsing="false" onAction="#deleteUser" text="Delete User" />
       </AnchorPane>
    </right>
 </BorderPane>
