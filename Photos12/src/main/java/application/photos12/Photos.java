@@ -19,13 +19,12 @@ public class Photos extends Application implements Serializable {
 
     private static List<User> users;
 
-    public Photos () {
-        users = new ArrayList<User>();
-        users.add(new User("stock"));
+    public static void addUser(User u) {
+        users.add(u);
     }
 
-    public static void createUser(User u) {
-        users.add(u);
+    public static void removeUser(String uName) {
+        users.removeIf(u -> u.getUserName().equals(uName));
     }
 
     public static List<User> getUsers() {
