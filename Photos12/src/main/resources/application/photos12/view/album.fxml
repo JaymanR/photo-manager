@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.photos12.controllers.AlbumController">
+   <bottom>
+      <AnchorPane prefHeight="20.0" style="-fx-border-color: black; -fx-background-color: gray;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <VBox prefHeight="400.0" prefWidth="183.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Search All Photos">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label text="From">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="-4.0" />
+               </VBox.margin>
+            </Label>
+            <TextField promptText="MM/DD/YYYY">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="To">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="-4.0" />
+               </VBox.margin>
+            </Label>
+            <TextField promptText="MM/DD/YYYY">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </TextField>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin></VBox>
+   </right>
+   <left>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Button maxHeight="100.0" maxWidth="100.0" mnemonicParsing="false" onAction="#createAlbum" style="-fx-wrap-text: true;" text="Create Album" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#rename" text="Rename Album" />
+            <Button mnemonicParsing="false" onAction="#delete" text="Delete Album" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#openAlbum" text="Open Album" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#logout" text="Log Out" textAlignment="CENTER" />
+        </items>
+      </ToolBar>
+   </top>
+</BorderPane>
