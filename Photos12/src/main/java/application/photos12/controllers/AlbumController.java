@@ -25,28 +25,15 @@ import java.io.IOException;
 import java.util.*;
 
 public class AlbumController {
-
-    private static final double PHOTO_THUMBNAIL_SIZE = 100;
-
     @FXML
     private BorderPane borderPane;
-
     private TableView<Album> table;
-
     private User user;
-    private Scene albumsScene;
-
     private ObservableList<Album> albumObsList;
-    private Album currentAlbum;
 
     public void start(Stage stage, User user){
         this.user = user;
         initializeAlbums();
-        albumsScene = Photos.getStage().getScene();
-    }
-
-    public void setAlbumsScene() {
-        Photos.getStage().setScene(albumsScene);
     }
 
     private void initializeAlbums() {
@@ -76,7 +63,7 @@ public class AlbumController {
         Scene scene = new Scene(root);
 
         ImageGalleryController imageGalleryController = loader.getController();
-        imageGalleryController.start(album);
+        imageGalleryController.start(user, album, Photos.getStage().getScene(), albumObsList);
         Photos.getStage().setScene(scene);
     }
 
@@ -112,6 +99,7 @@ public class AlbumController {
     }
 
     public void logout() {
+        Photos.getStage().setTitle("Photos");
         Photos.changeScene(Photos.login);
     }
 

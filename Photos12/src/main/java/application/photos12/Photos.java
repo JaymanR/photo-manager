@@ -1,6 +1,7 @@
 package application.photos12;
 
 import application.photos12.model.User;
+import application.photos12.model.Photo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -59,11 +60,12 @@ public class Photos extends Application implements Serializable {
         window.setTitle("Photos");
         window.setResizable(false);
         window.show();
+
+
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
 
 }

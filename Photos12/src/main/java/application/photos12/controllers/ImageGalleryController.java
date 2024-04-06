@@ -3,6 +3,10 @@ package application.photos12.controllers;
 import application.photos12.Photos;
 import application.photos12.model.Album;
 import application.photos12.model.Photo;
+import application.photos12.model.User;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -15,34 +19,45 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class ImageGalleryController {
     private static final double THUMBNAIL_SIZE = 100;
 
-    private Album currentAlbum;
-
     @FXML
     private FlowPane flowPane;
-    public void start(Album a) {
+    private Album currentAlbum;
+    private Scene albumsScene;
+    private User user;
+    private ObservableList<Album> albumObservableList;
+
+    public void start(User user, Album a, Scene prevScene, ObservableList<Album> albumObservableList) {
         currentAlbum = a;
+        albumsScene = prevScene;
+        this.user = user;
+        this.albumObservableList = albumObservableList;
         if (a.getNumPhotos() > 0) {
             for (Photo p : a.getImages()) {
                 addImageThumbnail(p);
             }
         }
+
     }
 
-    public void addImage() {
+    public void addImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
         File selectedFile = fileChooser.showOpenDialog(Photos.window);
         if (selectedFile != null) {
-            System.out.println(selectedFile.getAbsolutePath());
             Photo photo = new Photo(selectedFile);
             currentAlbum.addImage(photo);
+            user.writeUser();
             addImageThumbnail(photo);
+
+            albumObservableList.set(albumObservableList.indexOf(currentAlbum), currentAlbum);
+
         }
     }
 
@@ -64,7 +79,7 @@ public class ImageGalleryController {
         vBox.setId(p.getphotoName());
 
         vBox.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
+            if (e.getClickCount() == 1) {
                 Object source = e.getSource();
                 if (source instanceof VBox sourceBox) {
                     int x = 1;
@@ -75,7 +90,12 @@ public class ImageGalleryController {
     }
 
     public void back(){
-        // goes back to previous scene
+        Photos.getStage().setTitle("Albums");
+        Photos.getStage().setScene(albumsScene);
+    }
+
+    public void remove(){
+
     }
 
 }

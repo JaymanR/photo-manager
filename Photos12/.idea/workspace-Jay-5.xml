@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="23ff6569-9aa0-41e5-9a23-43056cfbc644" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/AlbumController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application/photos12/view/album.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/Photos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/Photos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/GalleryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/Admin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/Album.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/Album.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/Photo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application/photos12/view/gallery.fxml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2e3c4Y45W95FoMUxMU3BGD3qHar" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Photos.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;E:/Projects/School/cs213/assignment_photos12/Photos12/src/main/java/application/photos12&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/jayma/OneDrive/Desktop/Assignments/School/cs213/assignments/assignment_photos12/Photos12&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jayma\OneDrive\Desktop\Assignments\School\cs213\assignments\assignment_photos12\Photos12\src\main\resources\application\photos12\view" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Photos" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/Desktop/javafx-sdk-21.0.2/lib" />
+      <option name="MAIN_CLASS_NAME" value="application.photos12.Photos" />
+      <module name="Photos12" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="application.photos12.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="23ff6569-9aa0-41e5-9a23-43056cfbc644" name="Changes" comment="" />
+      <created>1711136511420</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711136511420</updated>
+      <workItem from="1711136512529" duration="34000" />
+      <workItem from="1711136599766" duration="15714000" />
+      <workItem from="1711746853136" duration="87000" />
+      <workItem from="1711747137897" duration="9504000" />
+      <workItem from="1711773373553" duration="424000" />
+      <workItem from="1711773801621" duration="3106000" />
+      <workItem from="1711822462570" duration="419000" />
+      <workItem from="1711922643104" duration="2111000" />
+      <workItem from="1711927937672" duration="57000" />
+      <workItem from="1711930166910" duration="1343000" />
+      <workItem from="1711993868076" duration="516000" />
+      <workItem from="1711994491875" duration="1463000" />
+      <workItem from="1712091233602" duration="3977000" />
+      <workItem from="1712112615831" duration="66000" />
+      <workItem from="1712112696613" duration="1213000" />
+      <workItem from="1712163706538" duration="9784000" />
+      <workItem from="1712253639059" duration="2016000" />
+      <workItem from="1712267190316" duration="4976000" />
+      <workItem from="1712330145376" duration="119000" />
+      <workItem from="1712330278965" duration="793000" />
+      <workItem from="1712331127910" duration="194000" />
+      <workItem from="1712331533383" duration="1871000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.RuntimeException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Photos12$Photos.ic" NAME="Photos Coverage Results" MODIFIED="1711773735497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>application.photos12.*</FILTER>
+    </SUITE>
+  </component>
+</project>

@@ -31,11 +31,12 @@ public class LoginController {
         }else{
             if (name.equals("admin")) {
                 admin();
+                warning.setText("");
             } else {
                 User user = null;
                 for (User u : Photos.getUsers()) {
                     if (u.getUserName().equals(name)) {
-                        user(name);
+                        user(name, u);
                         user = u;
                         warning.setText("");
                         break;
@@ -62,16 +63,17 @@ public class LoginController {
         Photos.changeScene(scene);
     }
 
-    public void user(String name) throws IOException {
+    public void user(String name, User user) throws IOException {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/application/photos12/view/gallery.fxml"));
+            loader.setLocation(getClass().getResource("/application/photos12/view/album.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
 
-            GalleryController galleryController = loader.getController();
-            galleryController.start(Photos.getStage());
+            AlbumController albumController = loader.getController();
+            albumController.start(Photos.getStage(), user);
 
+            Photos.getStage().setTitle("Albums");
             Photos.changeScene(scene);
             Photos.window.setResizable(true);
     }

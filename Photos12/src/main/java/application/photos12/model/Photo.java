@@ -20,17 +20,19 @@ public class Photo implements Serializable {
         tags = new ArrayList<>();
     }
 
-//    public void setDate(String dateString){
-//        // String is MM/DD/YYYY
+    public void setDate(){
+
 //        int year = Integer.parseInt(dateString.substring(6, 10));
 //        int month = Integer.parseInt(dateString.substring(0, 1));
 //        int day = Integer.parseInt(dateString.substring(3, 4));
-//        Date temp = new Date(year, month, day);
-//        date.setTime(temp);
-//        ;
-//    }
+//        date.set(year,month,day);
+        this.date = Calendar.getInstance();
+
+
+    }
 
     public Calendar getDate(){return date;}
+
     public void addTag(Tag t) {
         tags.add(t);
     }

@@ -28,6 +28,7 @@ public class Album implements Serializable {
     }
 
     public void addImage(Photo img) {
+        img.setDate();
         photos.add(img);
         numPhotos++;
     }

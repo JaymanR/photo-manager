@@ -1,5 +1,7 @@
 package application.photos12.model;
 
+import application.photos12.Photos;
+
 import java.io.*;
 import java.util.*;
 
@@ -10,16 +12,19 @@ public class User implements Serializable {
     private static final File rootDir = new File("src/main/resources/application/photos12/dat/users");
 
     private final String name;
+    private ArrayList<Album> albums;
+    private ArrayList<Photo> pictures;
 
     public User (String name) {
         this.name = name;
+        albums = new ArrayList<>();
     }
 
     public String getUserName() {
         return name;
     }
 
-    public void createUserDirectory(String name) {
+    private void createUserDirectory(String name) {
         File dir = new File(rootDir.getPath() + File.separator + name);
         if (dir.mkdir()) {
             System.out.println("Successfully created user directory for" + name);
@@ -72,5 +77,39 @@ public class User implements Serializable {
         if (userDir.delete()) {
             System.out.println("successfully deleted: " + dirName);
         }
+    }
+
+    public boolean searchAlb(String albName) {
+        if (albums == null) return false;
+        for (Album a : albums) {
+            if (a.getAlbumName().equals(albName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void mkAlb(String albName) {
+        Album album = new Album(albName);
+        albums.add(album);
+    }
+
+    public void delAlb(Album album) {
+        albums.remove(album);
+    }
+
+    public ArrayList<Photo> getPictures(){return pictures;}
+    public ArrayList<Album> getAlbums() {
+        return albums;
+    }
+
+
+    public Album getAlbum(String name) {
+        for (Album a : albums) {
+            if (a.getAlbumName().equals(name)) {
+                return a;
+            }
+        }
+        return null;
     }
 }
