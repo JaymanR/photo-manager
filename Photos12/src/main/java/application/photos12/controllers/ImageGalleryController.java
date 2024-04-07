@@ -10,12 +10,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import java.io.*;
+import java.util.Optional;
 
 public class ImageGalleryController {
     private static final double THUMBNAIL_SIZE = 100;
@@ -24,22 +26,38 @@ public class ImageGalleryController {
     private FlowPane flowPane;
     @FXML
     private VBox displayArea;
+    @FXML
+    private ImageView displayImageView;
+    @FXML
+    private Label caption;
+    @FXML
+    private Label date;
+    @FXML
+    private Label tags;
+
     private Album currentAlbum;
     private Scene albumsScene;
     private User user;
     private ObservableList<Album> albumObservableList;
+
+    private ImageView currentImageView;
+    private ImageView prevThumbnail;
 
     public void start(User user, Album a, Scene prevScene, ObservableList<Album> albumObservableList) throws FileNotFoundException {
         currentAlbum = a;
         albumsScene = prevScene;
         this.user = user;
         this.albumObservableList = albumObservableList;
-        if (a.getNumPhotos() > 0) {
-            for (Photo p : a.getImages()) {
+        initializeImages();
+    }
+
+    public void initializeImages() throws FileNotFoundException {
+        if (currentAlbum.getNumPhotos() > 0) {
+            for (Photo p : currentAlbum.getImages()) {
                 addImageThumbnail(p);
-                System.out.println(p.getDate());
             }
         }
+        hideDisplayArea();
     }
 
     public void addImage() throws IOException {
@@ -69,6 +87,15 @@ public class ImageGalleryController {
         }
     }
 
+    public void giveCaptionDialog() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initOwner(Photos.window);
+        dialog.setTitle("Image Caption");
+        dialog.setHeaderText("Please input caption for this image");
+        Optional<String> result = dialog.showAndWait();
+
+    }
+
     public void addImageThumbnail(Photo p) throws FileNotFoundException {
         Image image = new Image(new FileInputStream(p.getSrc()));
         ImageView photoImageView = new ImageView();
@@ -79,26 +106,39 @@ public class ImageGalleryController {
         photoImageView.setPreserveRatio(false);
         photoImageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 1);");
 
-        Label photoName = new Label(p.getphotoName());
+        Label caption = new Label(p.getCaption());
+        caption.setAlignment(Pos.CENTER);
+        caption.setWrapText(true);
+
+        Label filePath = new Label(p.getSrc().toString());
+        filePath.setVisible(false);
+        filePath.setManaged(false);
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(photoImageView, photoName);
-        vBox.setPrefHeight(THUMBNAIL_SIZE + photoName.prefHeight(-1));
+        vBox.getChildren().addAll(photoImageView, caption, filePath);
+        vBox.setPrefHeight(THUMBNAIL_SIZE);
         vBox.setMaxWidth(THUMBNAIL_SIZE);
-        vBox.setStyle("-fx-padding: 5px; -fx-border-color: 1px; -fx-border-width: 1px; -fx-border-radius: 5px;");
         vBox.setAlignment(Pos.CENTER);
-        vBox.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
         vBox.setId(p.getphotoName());
-
         vBox.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 1) {
-                Object source = e.getSource();
-                if (source instanceof VBox sourceBox) {
-                    int x = 1;
+            e.consume();
+            Object oSource = e.getSource();
+
+            if (oSource instanceof VBox vBoxSource) {
+                if (prevThumbnail != null) {
+                    prevThumbnail.setOpacity(1.0);
                 }
+                ImageView imgV = (ImageView) vBoxSource.getChildren().getFirst();
+                prevThumbnail = imgV;
+                imgV.setOpacity(0.1);
+                Image img = imgV.getImage();
+
+                Label fileSrc = (Label) vBoxSource.getChildren().getLast();
+                showImage(img, fileSrc.getText());
             }
         });
-        flowPane.getChildren().add(photoImageView);
+
+        flowPane.getChildren().add(vBox);
     }
 
     public void duplicatePhotoAlert() {
@@ -119,11 +159,24 @@ public class ImageGalleryController {
     }
 
     public void hideDisplayArea() {
+        if (prevThumbnail != null) {
+            prevThumbnail.setOpacity(1.0);
+        }
         displayArea.setVisible(false);
         displayArea.setManaged(false);
     }
 
-    public void showImage() {
+    public void showImage(Image img, String path) {
+        Photo p = currentAlbum.getPhotoByPath(path);
+
+        if (p != null) {
+            date.setText(p.getDate().getTime().toString());
+            caption.setText(p.getCaption());
+            tags.setText(p.printTags());
+        }
+
+        displayImageView.setImage(img);
+        displayImageView.setPreserveRatio(true);
 
         displayArea.setVisible(true);
         displayArea.setManaged(true);
