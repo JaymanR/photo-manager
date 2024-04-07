@@ -37,7 +37,7 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <Button mnemonicParsing="false" onAction="#back" text="Back" />
-            <Button mnemonicParsing="false" text="SlideShow" />
+            <Button fx:id="slideshow" mnemonicParsing="false" onAction="#slideshow" text="SlideShow" />
             <Button fx:id="createAlbumBtn" mnemonicParsing="false" onAction="#createAlbum" text="Create Album and Open" />
         </items>
       </ToolBar>

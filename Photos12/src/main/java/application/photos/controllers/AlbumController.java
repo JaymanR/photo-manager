@@ -113,6 +113,15 @@ public class AlbumController {
         Album albName = table.getSelectionModel().getSelectedItem();
         user.delAlb(albName);
         albumObsList.remove(albName);
+
+        for(Photo p: albName.getImages()){
+            p.getAlbums().remove(albName.getAlbumName());
+        }
+
+        if(user.getAlbums().isEmpty()){
+            user.getPictures().removeAll(user.getPictures());
+        }
+
         user.writeUser();
     }
 

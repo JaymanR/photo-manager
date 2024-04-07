@@ -9,13 +9,14 @@ public class Photo implements Serializable {
 
     private File imgFile;
     private String caption;
-    private ArrayList<Album> albums;
+    private ArrayList<String> albums;
     private ArrayList<Tag> tags;
     private Calendar date;
 
     public Photo(File imgSrc) {
         this.imgFile = imgSrc;
         tags = new ArrayList<>();
+        albums = new ArrayList<String>();
     }
 
     public void setDate(){
@@ -32,6 +33,10 @@ public class Photo implements Serializable {
     public void addTag(Tag t) {
         tags.add(t);
     }
+
+    public void addedtoAlbum(String a){albums.add(a);}
+
+    public ArrayList<String> getAlbums() {return albums;}
 
     public void removeTag() {}
 

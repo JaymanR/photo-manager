@@ -7,13 +7,17 @@ import application.photos.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.util.Optional;
 
@@ -34,6 +38,8 @@ public class ImageGalleryController {
     private Button createAlbumBtn;
     @FXML
     private ImageView displayImageView;
+    @FXML
+    private Button slideshow;
     @FXML
     private ChoiceBox<String> copyToCB;
     @FXML
@@ -79,6 +85,7 @@ public class ImageGalleryController {
         addPhotoBox.setManaged(bool);
         albumTools.setVisible(bool);
         albumTools.setManaged(bool);
+        slideshow.setVisible(bool);
         if (!bool){
             flowPane.setStyle("-fx-background-color:  #e4e9ed");
         } else {
@@ -140,10 +147,12 @@ public class ImageGalleryController {
 
             if (photo != null) {
                 currentAlbum.addImage(photo);
+                photo.addedtoAlbum(currentAlbum.getAlbumName());
             } else {
                 photo = new Photo(selectedFile);
                 user.addImageToUser(photo);
                 currentAlbum.addImage(photo);
+                photo.addedtoAlbum(currentAlbum.getAlbumName());
             }
             user.writeUser();
             addImageThumbnail(photo);
@@ -152,7 +161,7 @@ public class ImageGalleryController {
         }
     }
 
-    public void copyPhoto() {
+    public void copyPhoto() throws IOException {
         String selection = copyToCB.getSelectionModel().getSelectedItem();
         Album targetAlbum = user.getAlbum(selection);
         if (targetAlbum.searchImage(selectedPhoto.getSrc())) {
@@ -160,11 +169,24 @@ public class ImageGalleryController {
         } else {
             targetAlbum.addImage(selectedPhoto);
             albumObservableList.set(albumObservableList.indexOf(targetAlbum), targetAlbum);
+            user.writeUser();
         }
     }
 
-    public void movePhoto() {
-
+    public void movePhoto() throws IOException {
+        String selection = moveToCB.getSelectionModel().getSelectedItem();
+        Album targetAlbum = user.getAlbum(selection);
+        if (targetAlbum.searchImage(selectedPhoto.getSrc())) {
+            duplicatePhotoAlert();
+        } else {
+            targetAlbum.addImage(selectedPhoto);
+            albumObservableList.set(albumObservableList.indexOf(targetAlbum), targetAlbum);
+            currentAlbum.removeImage(selectedPhoto);
+            albumObservableList.set(albumObservableList.indexOf(currentAlbum), currentAlbum);
+            flowPane.getChildren().clear();
+            initializeImages();
+            user.writeUser();
+        }
     }
 
     public void addImageThumbnail(Photo p) throws FileNotFoundException {
@@ -232,26 +254,25 @@ public class ImageGalleryController {
     }
 
     public void deletePhoto() throws IOException {
-        int count = 0;
         currentAlbum.removeImage(selectedPhoto);
         albumObservableList.set(albumObservableList.indexOf(currentAlbum), currentAlbum);
-
+        selectedPhoto.getAlbums().remove(currentAlbum.getAlbumName());
+        
         for (Album a : user.getAlbums()) {
             for (Photo p : a.getImages()) {
                 if (p.getSrc().toString().equalsIgnoreCase(selectedPhoto.toString())) {
                     return;
                 }
             }
-            if(a.searchImage(selectedPhoto.getSrc())){
-                count++;
-            }
         }
 
-        if (count == 0) {user.getPictures().remove(selectedPhoto);}
+        if(selectedPhoto.getAlbums().isEmpty()){
+            user.getPictures().remove(selectedPhoto);
+        }
 
         flowPane.getChildren().clear();
         initializeImages();
-
+        user.writeUser();
     }
 
     public String giveCaptionDialog() {
@@ -277,6 +298,23 @@ public class ImageGalleryController {
 
     public void manageTags() {
 
+    }
+
+    public void slideshow() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/application/photos/view/slideshow.fxml"));
+
+        Parent root = fxmlLoader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initOwner(Photos.window);
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+
+        SlideshowController slideshowController = fxmlLoader.getController();
+        slideshowController.start(stage, currentAlbum);
+        stage.show();
     }
 
     public void hideDisplayArea() {

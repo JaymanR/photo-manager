@@ -5,24 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e72efdfb-a3e5-4b78-944c-5b6c2d210572" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace-Dev’s MacBook Pro (2)-2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace-Dev’s MacBook Pro (2)-2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace-Jay-5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace-Jay-5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace-Jay-6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace-Jay-6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/Photos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/Photos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/AlbumController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/AlbumController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/ImageGalleryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/ImageGalleryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/Album.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/Album.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/MultiValueTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/MultiValueTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/Photo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/Photo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/SingleValueTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/SingleValueTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos12/util/SearchByDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos12/util/SearchByDate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application/photos12/view/album.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application/photos12/view/album.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application/photos12/view/image-gallery.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application/photos12/view/image-gallery.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos/controllers/AlbumController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos/controllers/AlbumController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos/controllers/ImageGalleryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos/controllers/ImageGalleryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos/controllers/SlideshowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos/controllers/SlideshowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos/model/Photo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos/model/Photo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/photos/util/SearchByDate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/photos/util/SearchByDate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application/photos/view/image-gallery.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application/photos/view/image-gallery.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application/photos/view/slideshow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application/photos/view/slideshow.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +50,9 @@
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/devpatel/Library/CloudStorage/OneDrive-Personal/assignment_photos12/Photos12&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
@@ -70,7 +61,7 @@
 }</component>
   <component name="RunManager">
     <configuration name="Photos" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="application.photos12.Photos" />
+      <option name="MAIN_CLASS_NAME" value="application.photos.Photos" />
       <module name="Photos12" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -97,8 +88,12 @@
       <workItem from="1712463684142" duration="64000" />
       <workItem from="1712463874835" duration="10973000" />
       <workItem from="1712506241236" duration="9027000" />
-      <workItem from="1712521444152" duration="354000" />
-      <workItem from="1712522347855" duration="15000" />
+      <workItem from="1712521444152" duration="976000" />
+      <workItem from="1712522482336" duration="155000" />
+      <workItem from="1712522644837" duration="86000" />
+      <workItem from="1712522789322" duration="83000" />
+      <workItem from="1712522880828" duration="268000" />
+      <workItem from="1712524275474" duration="1268000" />
     </task>
     <servers />
   </component>
@@ -107,6 +102,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassNotFoundException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
