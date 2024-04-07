@@ -1,6 +1,4 @@
-package application.photos12.model;
-
-import javafx.scene.image.ImageView;
+package application.photos.model;
 
 import java.io.*;
 import java.util.*;
@@ -21,14 +19,12 @@ public class Photo implements Serializable {
     }
 
     public void setDate(){
+        date = Calendar.getInstance();
+        date.set(Calendar.MILLISECOND, 0);
+    }
 
-//        int year = Integer.parseInt(dateString.substring(6, 10));
-//        int month = Integer.parseInt(dateString.substring(0, 1));
-//        int day = Integer.parseInt(dateString.substring(3, 4));
-//        date.set(year,month,day);
-        this.date = Calendar.getInstance();
-
-
+    public void editCaption(String caption) {
+        this.caption = caption;
     }
 
     public Calendar getDate(){return date;}
@@ -37,9 +33,7 @@ public class Photo implements Serializable {
         tags.add(t);
     }
 
-    public void removeTag() {
-
-    }
+    public void removeTag() {}
 
     public File getSrc() {
         return imgFile;
@@ -50,4 +44,12 @@ public class Photo implements Serializable {
     }
 
     public ArrayList<Tag> getTags(){return tags;}
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public String printTags() {
+        return "placeholder";
+    }
 }

@@ -1,18 +1,15 @@
-package application.photos12.controllers;
+package application.photos.controllers;
 
-import application.photos12.Photos;
-import application.photos12.model.Album;
-import application.photos12.model.Photo;
-import application.photos12.model.User;
+import application.photos.Photos;
+import application.photos.model.Album;
+import application.photos.model.Photo;
+import application.photos.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -20,13 +17,21 @@ import javafx.stage.FileChooser;
 import java.io.*;
 import java.util.Optional;
 
+import static application.photos.controllers.AlbumController.checkIfDuplicate;
+
 public class ImageGalleryController {
     private static final double THUMBNAIL_SIZE = 100;
 
     @FXML
     private FlowPane flowPane;
     @FXML
+    private VBox addPhotoBox;
+    @FXML
+    private VBox albumTools;
+    @FXML
     private VBox displayArea;
+    @FXML
+    private Button createAlbumBtn;
     @FXML
     private ImageView displayImageView;
     @FXML
@@ -49,16 +54,36 @@ public class ImageGalleryController {
     private ImageView prevThumbnail;
     private Photo selectedPhoto;
 
-    public void start(User user, Album a, Scene prevScene, ObservableList<Album> albumObservableList) throws FileNotFoundException {
+    public void start(User user, Album a, Scene prevScene, ObservableList<Album> albumObservableList, boolean bool) throws FileNotFoundException {
         currentAlbum = a;
         albumsScene = prevScene;
         this.user = user;
         this.albumObservableList = albumObservableList;
-        initializeImages();
-        ObservableList<String> albumStrObsList = FXCollections.observableArrayList();
-        albumStrObsList.addAll(user.getAlbumsAsString());
-        copyToCB.setItems(albumStrObsList);
-        moveToCB.setItems(albumStrObsList);
+        if (!bool) {
+            initializeImages();
+            ObservableList<String> albumStrObsList = FXCollections.observableArrayList();
+            albumStrObsList.addAll(user.getAlbumsAsString());
+            copyToCB.setItems(albumStrObsList);
+            moveToCB.setItems(albumStrObsList);
+            createAlbumBtn.setVisible(false);
+            createAlbumBtn.setManaged(false);
+            searchView(true);
+        } else {
+            initializeImages();
+            searchView(false);
+        }
+    }
+
+    public void searchView(boolean bool) {
+        addPhotoBox.setVisible(bool);
+        addPhotoBox.setManaged(bool);
+        albumTools.setVisible(bool);
+        albumTools.setManaged(bool);
+        if (!bool){
+            flowPane.setStyle("-fx-background-color:  #e4e9ed");
+        } else {
+            flowPane.setStyle("-fx-background-color:  #ffff");
+        }
     }
 
     public void initializeImages() throws FileNotFoundException {
@@ -70,10 +95,40 @@ public class ImageGalleryController {
         hideDisplayArea();
     }
 
+    public void createAlbum() throws IOException {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initOwner(Photos.window);
+        dialog.setTitle("Create Album");
+        dialog.setHeaderText("Enter AlbumName");
+        Optional<String> result = dialog.showAndWait();
+
+        if(result.isPresent() && !user.searchAlb(result.get().toLowerCase())){
+            if(result.get().isBlank()){
+                Alert alert = new Alert((Alert.AlertType.INFORMATION));
+                alert.initOwner(Photos.window);
+                alert.setTitle("No Album Name");
+                alert.setHeaderText("Album name not provided.");
+                alert.setContentText("Please enter a name for the Album.");
+                alert.showAndWait();
+            }
+            currentAlbum.renameAlbum(result.get().toLowerCase());
+        }else {
+            checkIfDuplicate(result, user);
+        }
+
+        user.addAlbum(currentAlbum);
+        albumObservableList.add(currentAlbum);
+        user.writeUser();
+        flowPane.getChildren().clear();
+        start(user, currentAlbum, albumsScene, albumObservableList, false);
+    }
+
+
+
     public void addImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.bmp", "*.gif", "*.png", "*.jpg"));
         File selectedFile = fileChooser.showOpenDialog(Photos.window);
         if (selectedFile != null) {
             Photo photo = user.searchAllPictures(selectedFile);
@@ -176,7 +231,8 @@ public class ImageGalleryController {
         Photos.getStage().setScene(albumsScene);
     }
 
-    public void deletePhoto() throws FileNotFoundException {
+    public void deletePhoto() throws IOException {
+        int count = 0;
         currentAlbum.removeImage(selectedPhoto);
         albumObservableList.set(albumObservableList.indexOf(currentAlbum), currentAlbum);
 
@@ -186,10 +242,16 @@ public class ImageGalleryController {
                     return;
                 }
             }
+            if(a.searchImage(selectedPhoto.getSrc())){
+                count++;
+            }
         }
+
+        if (count == 0) {user.getPictures().remove(selectedPhoto);}
+
         flowPane.getChildren().clear();
         initializeImages();
-        user.getPictures().remove(selectedPhoto);
+
     }
 
     public String giveCaptionDialog() {

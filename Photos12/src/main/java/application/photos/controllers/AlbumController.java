@@ -1,27 +1,21 @@
-package application.photos12.controllers;
+package application.photos.controllers;
 
-import application.photos12.Photos;
-import application.photos12.util.*;
-import application.photos12.model.Album;
-import application.photos12.model.Photo;
-import application.photos12.model.User;
+import application.photos.Photos;
+import application.photos.util.*;
+import application.photos.model.Album;
+import application.photos.model.Photo;
+import application.photos.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,13 +61,13 @@ public class AlbumController {
         Album album = table.getSelectionModel().getSelectedItem();
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/application/photos12/view/image-gallery.fxml"));
+        loader.setLocation(getClass().getResource("/application/photos/view/image-gallery.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);
 
         ImageGalleryController imageGalleryController = loader.getController();
-        imageGalleryController.start(user, album, Photos.getStage().getScene(), albumObsList);
+        imageGalleryController.start(user, album, Photos.getStage().getScene(), albumObsList, false);
         Photos.getStage().setTitle(album.getAlbumName());
         Photos.getStage().setScene(scene);
     }
@@ -139,24 +133,45 @@ public class AlbumController {
                 alert.setHeaderText("Album name not provided.");
                 alert.setContentText("Please enter a name for the Album.");
                 alert.showAndWait();
+                return;
             }
-
             albName.renameAlbum(result.get().toLowerCase());
             initializeAlbums();
+        }else {
+            checkIfDuplicate(result, user);
+        }
+        user.writeUser();
+    }
 
-        }else if(result.isPresent() && user.searchAlb(result.get().toLowerCase())){
+    protected static void checkIfDuplicate(Optional<String> result, User user) {
+        if(result.isPresent() && user.searchAlb(result.get().toLowerCase())){
             Alert alert = new Alert((Alert.AlertType.INFORMATION));
             alert.initOwner(Photos.window);
             alert.setTitle("Album Name Already Exists");
             alert.setHeaderText("Album Name is used already.");
             alert.setContentText("Please enter a new name for Album.");
             alert.showAndWait();
-
         }
-        user.writeUser();
     }
 
-    public void searchbydate(){
+    public void openSearch(ArrayList<Photo> list) throws IOException{
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/application/photos/view/image-gallery.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+
+        Album temp = new Album("temp");
+        temp.setPhotos(list);
+
+        ImageGalleryController imageGalleryController = loader.getController();
+        imageGalleryController.start(user, temp, Photos.getStage().getScene(), albumObsList, true);
+        Photos.getStage().setTitle("Search Results");
+        Photos.getStage().setScene(scene);
+    }
+
+    public void searchbydate() throws IOException{
 
         boolean format = true;
         String first = firstdate.getText();
@@ -194,6 +209,7 @@ public class AlbumController {
             warning.setText("First Date is Invalid");
         }
 
+        if(format) {
             try {
                 SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
                 date.setLenient(false);
@@ -202,14 +218,36 @@ public class AlbumController {
                 format = false;
                 warning.setText("Last Date is Invalid");
             }
+        }
 
 
 
 
         if(format){
-            ArrayList<Photo> test = SearchByDate.searchdate(user.getPictures(),fcal,lcal);
-        }
+            int fmonth = Integer.parseInt(first.substring(0,2));
+            int fday = Integer.parseInt(first.substring(3,5));
+            int fyear = Integer.parseInt(first.substring(6,10));
 
+            int lmonth = Integer.parseInt(last.substring(0,2));
+            int lday = Integer.parseInt(last.substring(3,5));
+            int lyear = Integer.parseInt(last.substring(6,10));
+
+            fcal.set(fyear,fmonth-1,fday);
+            lcal.set(lyear,lmonth-1,lday);
+
+            try {
+                long epoch = new SimpleDateFormat("MM/dd/yyyy").parse(first).getTime();
+                fcal.setTimeInMillis(epoch);
+            }catch (ParseException e) {}
+
+            try {
+                long epoch = new SimpleDateFormat("MM/dd/yyyy").parse(last).getTime();
+                lcal.setTimeInMillis(epoch + 86400000);
+            }catch (ParseException e) {}
+
+            ArrayList<Photo> test = SearchByDate.searchdate(user.getPictures(),fcal,lcal);
+            openSearch(test);
+        }
 
     }
 }

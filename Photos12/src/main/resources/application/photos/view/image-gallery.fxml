@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.photos12.controllers.ImageGalleryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.photos.controllers.ImageGalleryController">
    <center>
       <FlowPane fx:id="flowPane" hgap="10.0" onMouseClicked="#hideDisplayArea" prefHeight="200.0" prefWidth="200.0" vgap="10.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -19,7 +19,7 @@
          </BorderPane.margin></FlowPane>
    </center>
    <left>
-      <VBox alignment="TOP_CENTER" prefWidth="120.0" style="-fx-background-color: e4e9ed;" BorderPane.alignment="CENTER">
+      <VBox fx:id="addPhotoBox" alignment="TOP_CENTER" prefWidth="120.0" style="-fx-background-color: e4e9ed;" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -38,6 +38,7 @@
         <items>
           <Button mnemonicParsing="false" onAction="#back" text="Back" />
             <Button mnemonicParsing="false" text="SlideShow" />
+            <Button fx:id="createAlbumBtn" mnemonicParsing="false" onAction="#createAlbum" text="Create Album and Open" />
         </items>
       </ToolBar>
    </top>
@@ -127,7 +128,7 @@
                         </Button>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="albumTools" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#deletePhoto" prefWidth="70.0" text="Delete">
                            <VBox.margin>

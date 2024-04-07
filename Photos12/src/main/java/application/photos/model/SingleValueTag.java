@@ -1,4 +1,4 @@
-package application.photos12.model;
+package application.photos.model;
 
 public class SingleValueTag extends Tag {
     private String value;

@@ -1,11 +1,11 @@
-module application.photos12 {
+module application.photos {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens application.photos12 to javafx.fxml;
-    exports application.photos12;
-    exports application.photos12.controllers;
-    exports  application.photos12.model;
-    opens application.photos12.controllers to javafx.fxml;
+    opens application.photos to javafx.fxml;
+    exports application.photos;
+    exports application.photos.controllers;
+    exports  application.photos.model;
+    opens application.photos.controllers to javafx.fxml;
 }

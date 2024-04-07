@@ -1,4 +1,4 @@
-package application.photos12.model;
+package application.photos.model;
 
 import java.io.Serial;
 import java.io.Serializable;

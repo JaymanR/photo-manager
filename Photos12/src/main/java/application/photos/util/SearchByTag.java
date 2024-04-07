@@ -1,9 +1,9 @@
-package application.photos12.util;
+package application.photos.util;
 
 import java.util.*;
-import application.photos12.model.Photo;
-import application.photos12.model.Tag;
-import application.photos12.model.User;
+import application.photos.model.Photo;
+import application.photos.model.Tag;
+import application.photos.model.User;
 
 public class SearchByTag {
 

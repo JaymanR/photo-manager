@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.photos12.controllers.AlbumController">
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.photos.controllers.AlbumController">
    <bottom>
       <AnchorPane prefHeight="20.0" style="-fx-border-color: black; -fx-background-color: gray;" BorderPane.alignment="CENTER" />
    </bottom>
    <right>
-      <VBox prefHeight="400.0" prefWidth="183.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="400.0" prefWidth="180.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Search All Photos">
                <VBox.margin>
@@ -25,12 +25,17 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
+            <Label fx:id="warning" prefHeight="17.0" prefWidth="191.0" textFill="RED">
+               <VBox.margin>
+                  <Insets bottom="6.0" left="10.0" right="10.0" top="-8.0" />
+               </VBox.margin>
+            </Label>
             <Label text="From">
                <VBox.margin>
                   <Insets bottom="5.0" left="10.0" right="10.0" top="-4.0" />
                </VBox.margin>
             </Label>
-            <TextField promptText="MM/DD/YYYY">
+            <TextField fx:id="firstdate" promptText="MM/DD/YYYY">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
@@ -40,16 +45,21 @@
                   <Insets bottom="5.0" left="10.0" right="10.0" top="-4.0" />
                </VBox.margin>
             </Label>
-            <TextField promptText="MM/DD/YYYY">
+            <TextField fx:id="lastdate" promptText="MM/DD/YYYY">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="Search">
+            <Button mnemonicParsing="false" onAction="#searchbydate" prefHeight="26.0" prefWidth="60.0" text="Search">
                <VBox.margin>
-                  <Insets bottom="10.0" left="55.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="60.0" right="10.0" top="10.0" />
                </VBox.margin>
             </Button>
+            <Label prefHeight="17.0" prefWidth="162.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="-2.0" />
+               </VBox.margin>
+            </Label>
          </children>
          <BorderPane.margin>
             <Insets />
