@@ -40,8 +40,9 @@ public class ImageGalleryController {
     private User user;
     private ObservableList<Album> albumObservableList;
 
-    private ImageView currentImageView;
+    private VBox currentThumbnailContainer;
     private ImageView prevThumbnail;
+    private Photo selectedPhoto;
 
     public void start(User user, Album a, Scene prevScene, ObservableList<Album> albumObservableList) throws FileNotFoundException {
         currentAlbum = a;
@@ -87,12 +88,11 @@ public class ImageGalleryController {
         }
     }
 
-    public void giveCaptionDialog() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.initOwner(Photos.window);
-        dialog.setTitle("Image Caption");
-        dialog.setHeaderText("Please input caption for this image");
-        Optional<String> result = dialog.showAndWait();
+    public void copyPhoto() {
+
+    }
+
+    public void movePhoto() {
 
     }
 
@@ -104,7 +104,7 @@ public class ImageGalleryController {
         photoImageView.setFitHeight(THUMBNAIL_SIZE);
         photoImageView.setFitWidth(THUMBNAIL_SIZE);
         photoImageView.setPreserveRatio(false);
-        photoImageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 1);");
+        //photoImageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 1);");
 
         Label caption = new Label(p.getCaption());
         caption.setAlignment(Pos.CENTER);
@@ -131,10 +131,16 @@ public class ImageGalleryController {
                 ImageView imgV = (ImageView) vBoxSource.getChildren().getFirst();
                 prevThumbnail = imgV;
                 imgV.setOpacity(0.1);
-                Image img = imgV.getImage();
 
                 Label fileSrc = (Label) vBoxSource.getChildren().getLast();
-                showImage(img, fileSrc.getText());
+                String photoPath = fileSrc.getText();
+                selectedPhoto = currentAlbum.getPhotoByPath(photoPath);
+                currentThumbnailContainer = vBoxSource;
+                try {
+                    showImage();
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -154,7 +160,32 @@ public class ImageGalleryController {
         Photos.getStage().setScene(albumsScene);
     }
 
-    public void remove(){
+    public void deletePhoto(){
+
+    }
+
+    public String giveCaptionDialog() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initOwner(Photos.window);
+        dialog.setTitle("Image Caption");
+        dialog.setHeaderText("Please input caption for this image");
+        Optional<String> result = dialog.showAndWait();
+        return result.orElse(null);
+    }
+
+    public void editCaption() throws IOException {
+        System.out.println("editCaption");
+        String caption = giveCaptionDialog();
+       if (caption != null) {
+            selectedPhoto.editCaption(caption);
+            Label label = (Label) currentThumbnailContainer.getChildren().get(1);
+            label.setText(caption);
+            showImage();
+            user.writeUser();
+        }
+    }
+
+    public void manageTags() {
 
     }
 
@@ -164,18 +195,19 @@ public class ImageGalleryController {
         }
         displayArea.setVisible(false);
         displayArea.setManaged(false);
+        selectedPhoto = null;
     }
 
-    public void showImage(Image img, String path) {
-        Photo p = currentAlbum.getPhotoByPath(path);
+    public void showImage() throws FileNotFoundException {
 
-        if (p != null) {
-            date.setText(p.getDate().getTime().toString());
-            caption.setText(p.getCaption());
-            tags.setText(p.printTags());
+        if (selectedPhoto != null) {
+            date.setText(selectedPhoto.getDate().getTime().toString());
+            caption.setText(selectedPhoto.getCaption());
+            tags.setText(selectedPhoto.printTags());
+            displayImageView.setImage(new Image(new FileInputStream(selectedPhoto.getSrc())));
         }
 
-        displayImageView.setImage(img);
+
         displayImageView.setPreserveRatio(true);
 
         displayArea.setVisible(true);
