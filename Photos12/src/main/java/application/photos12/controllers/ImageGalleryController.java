@@ -4,17 +4,18 @@ import application.photos12.Photos;
 import application.photos12.model.Album;
 import application.photos12.model.Photo;
 import application.photos12.model.User;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import java.io.*;
 import java.util.Optional;
@@ -28,6 +29,10 @@ public class ImageGalleryController {
     private VBox displayArea;
     @FXML
     private ImageView displayImageView;
+    @FXML
+    private ChoiceBox<String> copyToCB;
+    @FXML
+    private ChoiceBox<String> moveToCB;
     @FXML
     private Label caption;
     @FXML
@@ -50,6 +55,10 @@ public class ImageGalleryController {
         this.user = user;
         this.albumObservableList = albumObservableList;
         initializeImages();
+        ObservableList<String> albumStrObsList = FXCollections.observableArrayList();
+        albumStrObsList.addAll(user.getAlbumsAsString());
+        copyToCB.setItems(albumStrObsList);
+        moveToCB.setItems(albumStrObsList);
     }
 
     public void initializeImages() throws FileNotFoundException {
@@ -89,7 +98,14 @@ public class ImageGalleryController {
     }
 
     public void copyPhoto() {
-
+        String selection = copyToCB.getSelectionModel().getSelectedItem();
+        Album targetAlbum = user.getAlbum(selection);
+        if (targetAlbum.searchImage(selectedPhoto.getSrc())) {
+            duplicatePhotoAlert();
+        } else {
+            targetAlbum.addImage(selectedPhoto);
+            albumObservableList.set(albumObservableList.indexOf(targetAlbum), targetAlbum);
+        }
     }
 
     public void movePhoto() {
@@ -160,8 +176,20 @@ public class ImageGalleryController {
         Photos.getStage().setScene(albumsScene);
     }
 
-    public void deletePhoto(){
+    public void deletePhoto() throws FileNotFoundException {
+        currentAlbum.removeImage(selectedPhoto);
+        albumObservableList.set(albumObservableList.indexOf(currentAlbum), currentAlbum);
 
+        for (Album a : user.getAlbums()) {
+            for (Photo p : a.getImages()) {
+                if (p.getSrc().toString().equalsIgnoreCase(selectedPhoto.toString())) {
+                    return;
+                }
+            }
+        }
+        flowPane.getChildren().clear();
+        initializeImages();
+        user.getPictures().remove(selectedPhoto);
     }
 
     public String giveCaptionDialog() {
