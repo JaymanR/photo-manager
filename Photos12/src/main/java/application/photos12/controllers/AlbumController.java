@@ -1,6 +1,7 @@
 package application.photos12.controllers;
 
 import application.photos12.Photos;
+import application.photos12.util.*;
 import application.photos12.model.Album;
 import application.photos12.model.Photo;
 import application.photos12.model.User;
@@ -22,6 +23,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class AlbumController {
@@ -30,6 +33,13 @@ public class AlbumController {
     private TableView<Album> table;
     private User user;
     private ObservableList<Album> albumObsList;
+
+    @FXML
+    private TextField firstdate;
+    @FXML
+    private TextField lastdate;
+    @FXML
+    private Label warning;
 
     public void start(Stage stage, User user){
         this.user = user;
@@ -64,6 +74,7 @@ public class AlbumController {
 
         ImageGalleryController imageGalleryController = loader.getController();
         imageGalleryController.start(user, album, Photos.getStage().getScene(), albumObsList);
+        Photos.getStage().setTitle(album.getAlbumName());
         Photos.getStage().setScene(scene);
     }
 
@@ -86,7 +97,8 @@ public class AlbumController {
                 return;
             }
             user.mkAlb(result.get().toLowerCase());
-            albumObsList.add(user.getAlbum(result.get()));
+            albumObsList.add(user.getAlbum(result.get().toLowerCase()));
+            initializeAlbums();
         } else if (result.isPresent() && user.searchAlb(result.get().toLowerCase())) {
             Alert alert = new Alert((Alert.AlertType.INFORMATION));
             alert.initOwner(Photos.window);
@@ -142,5 +154,62 @@ public class AlbumController {
 
         }
         user.writeUser();
+    }
+
+    public void searchbydate(){
+
+        boolean format = true;
+        String first = firstdate.getText();
+        String last = lastdate.getText();
+
+        Calendar fcal = Calendar.getInstance();
+        Calendar lcal = Calendar.getInstance();
+
+        fcal.set(Calendar.MILLISECOND, 0);
+        lcal.set(Calendar.MILLISECOND, 0);
+
+        if(!first.isBlank() && !last.isBlank()){warning.setText("");}
+
+        if(first.isBlank()){
+            format = false;
+            warning.setText("Enter First Date");
+        }else if(last.isBlank()){
+            format = false;
+            warning.setText("Enter Last Date");
+        }else if(first.length() != 10){
+            format = false;
+            warning.setText("Please enter a Valid First Date");
+        }else if(last.length() != 10){
+            format = false;
+            warning.setText("Please enter a Valid Last Date");
+        }
+
+
+        try {
+            SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+            date.setLenient(false);
+            date.parse(first);
+        } catch (ParseException | IllegalArgumentException e) {
+            format = false;
+            warning.setText("First Date is Invalid");
+        }
+
+            try {
+                SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+                date.setLenient(false);
+                date.parse(last);
+            } catch (ParseException | IllegalArgumentException e) {
+                format = false;
+                warning.setText("Last Date is Invalid");
+            }
+
+
+
+
+        if(format){
+            ArrayList<Photo> test = SearchByDate.searchdate(user.getPictures(),fcal,lcal);
+        }
+
+
     }
 }
