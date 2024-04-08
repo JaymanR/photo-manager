@@ -3,6 +3,7 @@ package application.photos.controllers;
 import application.photos.Photos;
 import application.photos.model.Album;
 import application.photos.model.Photo;
+import application.photos.model.Tag;
 import application.photos.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -296,8 +297,21 @@ public class ImageGalleryController {
         }
     }
 
-    public void manageTags() {
+    public void manageTags() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/application/photos/view/tag-manager.fxml"));
 
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.initOwner(Photos.window);
+        stage.setScene(scene);
+        stage.setResizable(false);
+
+        TagManagerController tagManagerController = loader.getController();
+        tagManagerController.start(stage, user, selectedPhoto, this);
+        stage.show();
     }
 
     public void slideshow() throws IOException {

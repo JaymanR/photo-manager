@@ -2,20 +2,18 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.photos.controllers.AlbumController">
-   <bottom>
-      <AnchorPane prefHeight="20.0" style="-fx-border-color: black; -fx-background-color: gray;" BorderPane.alignment="CENTER" />
-   </bottom>
+<BorderPane fx:id="borderPane" minHeight="-Infinity" prefHeight="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.photos.controllers.AlbumController">
    <right>
-      <VBox prefHeight="400.0" prefWidth="180.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="163.0" text="Search All Photos">
                <VBox.margin>
@@ -29,6 +27,14 @@
                <VBox.margin>
                   <Insets bottom="6.0" left="10.0" right="10.0" top="-8.0" />
                </VBox.margin>
+            </Label>
+            <Label text="Date Range">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Label>
             <Label text="From">
                <VBox.margin>
@@ -60,6 +66,62 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="-2.0" />
                </VBox.margin>
             </Label>
+            <VBox>
+               <children>
+                  <Label style="-fx-font-weight: bold;" text="Tag">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="tagNameField1" promptText="&lt;tag name&gt;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="tagValueField1" promptText="&lt;tag value&gt;">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#searchByTag" text="Search">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <CheckBox mnemonicParsing="false" onAction="#initializeAdvancedView" text="Advanced">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </CheckBox>
+                  <VBox fx:id="advancedVbox">
+                     <children>
+                        <ChoiceBox fx:id="choiceBonx">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </ChoiceBox>
+                        <TextField fx:id="tagNameField2" promptText="&lt;tag name&gt;">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="tagValueField2" promptText="&lt;tag value&gt;">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Button fx:id="advancedSearchBtn" mnemonicParsing="false" onAction="#advancedTagSearch" text="Search">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
          </children>
          <BorderPane.margin>
             <Insets />
@@ -87,7 +149,7 @@
       </VBox>
    </left>
    <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ToolBar BorderPane.alignment="CENTER">
         <items>
           <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#logout" text="Log Out" textAlignment="CENTER" />
         </items>

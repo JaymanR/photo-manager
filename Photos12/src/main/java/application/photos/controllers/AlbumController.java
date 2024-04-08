@@ -1,6 +1,7 @@
 package application.photos.controllers;
 
 import application.photos.Photos;
+import application.photos.model.Tag;
 import application.photos.util.*;
 import application.photos.model.Album;
 import application.photos.model.Photo;
@@ -35,9 +36,33 @@ public class AlbumController {
     @FXML
     private Label warning;
 
+    @FXML
+    private VBox advancedVbox;
+    @FXML
+    private TextField tagNameField1;
+    @FXML
+    private TextField tagValueField1;
+
+    @FXML
+    private ChoiceBox<String> choiceBonx;
+
+    @FXML
+    private TextField tagNameField2;
+    @FXML
+    private TextField tagValueField2;
+    @FXML
+    private Button searchBtn;
+    @FXML
+    private Button advancedSearchBtn;
+
+    private boolean advanced;
+
     public void start(Stage stage, User user){
         this.user = user;
         initializeAlbums();
+        advanced = false;
+        advancedVbox.setVisible(false);
+        advancedVbox.setManaged(false);
     }
 
     private void initializeAlbums() {
@@ -258,5 +283,62 @@ public class AlbumController {
             openSearch(test);
         }
 
+    }
+
+    public void initializeAdvancedView() {
+        searchBtn.setVisible(advanced);
+        //searchBtn.setManaged(advanced);
+        advancedVbox.setVisible(!advanced);
+        advancedVbox.setManaged(!advanced);
+        advanced = !advanced;
+    }
+
+    public void invalidInputAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(Photos.window);
+        alert.setTitle("Invalid Input");
+        alert.setContentText("Please give valid input");
+        alert.showAndWait();
+    }
+    public void searchByTag() throws IOException{
+        if (tagNameField1.getText().isBlank() || tagValueField1.getText().isBlank()) {
+            invalidInputAlert();
+            return;
+        }
+
+        String tagName = tagNameField1.getText();
+        String tagValue = tagValueField1.getText();
+
+        Tag searchTag = new Tag(tagName, tagValue, false);
+
+        ArrayList<Photo> tagHitPhotoList = SearchByTag.singleTagSearch(searchTag, user);
+
+        if (tagHitPhotoList.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initOwner(Photos.window);
+            alert.setHeaderText("No Photo found");
+            alert.setContentText("No Photo found with the Search Criteria");
+            alert.showAndWait();
+            return;
+        }
+
+        openSearch(tagHitPhotoList);
+    }
+
+    public void advancedTagSearch() {
+        initializeAdvancedView();
+
+        if (tagNameField1.getText().isBlank()
+                || tagValueField1.getText().isBlank()
+                || tagNameField2.getText().isBlank()
+                || tagValueField2.getText().isBlank()) {
+            invalidInputAlert();
+            return;
+        }
+        String tag1Name = tagNameField1.getText();
+        String tag1Value = tagValueField1.getText();
+
+        String tag2Name = tagNameField2.getText();
+        String tag2Value = tagValueField2.getText();
     }
 }

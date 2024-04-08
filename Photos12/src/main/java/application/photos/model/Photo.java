@@ -50,11 +50,38 @@ public class Photo implements Serializable {
 
     public ArrayList<Tag> getTags(){return tags;}
 
+    public Tag getTagByName(String name){
+        for(Tag t : tags){
+            if(t.getName().equals(name)){
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public boolean searchTagName(String name){
+        for(Tag t : tags){
+            if(t.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getCaption() {
         return caption;
     }
 
     public String printTags() {
-        return "placeholder";
+        StringBuilder sBuilder = new StringBuilder();
+        for (int i = 0; i < tags.size(); i++) {
+            Tag t = tags.get(i);
+            if (i < tags.size() - 1){
+                sBuilder.append(t.getName()).append(": ").append(t.getValue()).append(", ");
+            } else {
+                sBuilder.append(t.getName()).append(": ").append(t.getValue());
+            }
+        }
+        return sBuilder.toString();
     }
 }

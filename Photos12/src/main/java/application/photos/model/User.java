@@ -12,11 +12,15 @@ public class User implements Serializable {
     private final String name;
     private ArrayList<Album> albums;
     private ArrayList<Photo> pictures;
+    private ArrayList<String> singleList;
+    private ArrayList<String> multiList;
 
     public User (String name) {
         this.name = name;
         albums = new ArrayList<>();
         pictures = new ArrayList<>();
+        singleList = new ArrayList<>();
+        multiList = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -137,4 +141,15 @@ public class User implements Serializable {
         pictures.add(p);
     }
 
+    public ArrayList<String> getSingleList() {
+        return singleList;
+    }
+
+    public ArrayList<String> getMultiList() {return multiList;}
+
+    public void addSingleTag(String tag){if(!singleList.contains(tag)){singleList.add(tag);}}
+
+    public void addMultiTag(String tag){if(!multiList.contains(tag)){multiList.add(tag);}}
+
 }
+

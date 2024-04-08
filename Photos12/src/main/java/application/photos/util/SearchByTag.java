@@ -8,16 +8,19 @@ import application.photos.model.User;
 public class SearchByTag {
 
     private ArrayList<Photo> temp;
-    public ArrayList<Photo> searchtag(User user, ArrayList<Tag> tags){
 
-        for(Photo p: user.getPictures()){
-            for(Tag t: tags){
-                if(p.getTags().contains(t)){
-                    temp.add(p);
+    public static ArrayList<Photo> singleTagSearch(Tag searchTag, User user) {
+        ArrayList<Photo> hitList = new ArrayList<>();
+        for (Photo p : user.getPictures()) {
+            for (Tag t : p.getTags()) {
+                if (t.equals(searchTag)) {
+                    if (!hitList.contains(p)) {
+                        hitList.add(p);
+                    }
                 }
             }
         }
-
-        return temp;
+        return hitList;
     }
+
 }
