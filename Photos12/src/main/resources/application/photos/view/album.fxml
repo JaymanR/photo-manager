@@ -88,7 +88,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <CheckBox mnemonicParsing="false" onAction="#initializeAdvancedView" text="Advanced">
+                  <CheckBox fx:id="checkBonx" mnemonicParsing="false" onAction="#initializeAdvancedView" text="Advanced">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>

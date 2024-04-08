@@ -23,4 +23,29 @@ public class SearchByTag {
         return hitList;
     }
 
+    public static ArrayList<Photo> searchByCombination(Tag tag1, Tag tag2, boolean bool, User user) {
+        ArrayList<Photo> hitList = new ArrayList<>();
+        //if true = OR combination
+        if (bool) {
+            //or search
+            for (Photo p : user.getPictures()) {
+                    if (p.containsPropertiesOf(tag1) || p.containsPropertiesOf(tag2)) {
+                        if (!hitList.contains(p)) {
+                            hitList.add(p);
+                        }
+                    }
+            }
+
+        } else {
+            //AND
+            for (Photo p : user.getPictures()) {
+                    if (p.containsPropertiesOf(tag1) && p.containsPropertiesOf(tag2)) {
+                        if (!hitList.contains(p)) {
+                            hitList.add(p);
+                        }
+                    }
+            }
+        }
+        return hitList;
+    }
 }

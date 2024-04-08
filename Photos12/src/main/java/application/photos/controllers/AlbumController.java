@@ -45,6 +45,8 @@ public class AlbumController {
 
     @FXML
     private ChoiceBox<String> choiceBonx;
+    @FXML
+    private CheckBox checkBonx;
 
     @FXML
     private TextField tagNameField2;
@@ -63,6 +65,10 @@ public class AlbumController {
         advanced = false;
         advancedVbox.setVisible(false);
         advancedVbox.setManaged(false);
+        ObservableList<String> choices = FXCollections.observableArrayList();
+        choices.add("OR");
+        choices.add("And");
+        choiceBonx.setItems(choices);
     }
 
     private void initializeAlbums() {
@@ -300,7 +306,14 @@ public class AlbumController {
         alert.setContentText("Please give valid input");
         alert.showAndWait();
     }
-    public void searchByTag() throws IOException{
+    public void invalidInputAlert(String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(Photos.window);
+        alert.setTitle("Invalid Input");
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    public void searchByTag() throws IOException {
         if (tagNameField1.getText().isBlank() || tagValueField1.getText().isBlank()) {
             invalidInputAlert();
             return;
@@ -313,19 +326,10 @@ public class AlbumController {
 
         ArrayList<Photo> tagHitPhotoList = SearchByTag.singleTagSearch(searchTag, user);
 
-        if (tagHitPhotoList.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.initOwner(Photos.window);
-            alert.setHeaderText("No Photo found");
-            alert.setContentText("No Photo found with the Search Criteria");
-            alert.showAndWait();
-            return;
-        }
-
-        openSearch(tagHitPhotoList);
+        openSearchIfNotNull(tagHitPhotoList);
     }
 
-    public void advancedTagSearch() {
+    public void advancedTagSearch() throws IOException {
         initializeAdvancedView();
 
         if (tagNameField1.getText().isBlank()
@@ -335,10 +339,43 @@ public class AlbumController {
             invalidInputAlert();
             return;
         }
+
+        if (choiceBonx.getValue() == null) {
+            invalidInputAlert("No Combination AND/OR selected");
+            return;
+        }
         String tag1Name = tagNameField1.getText();
         String tag1Value = tagValueField1.getText();
 
         String tag2Name = tagNameField2.getText();
         String tag2Value = tagValueField2.getText();
+
+
+        Tag tag1 = new Tag(tag1Name, tag1Value, false);
+        Tag tag2 = new Tag(tag2Name, tag2Value, false);
+
+        boolean bool = false;
+
+        //OR is true AND is false
+        if (choiceBonx.getValue().equals("OR")) {
+            bool = true;
+        }
+
+        ArrayList<Photo> tagPhotoHitList= SearchByTag.searchByCombination(tag1, tag2, bool, user);
+
+        openSearchIfNotNull(tagPhotoHitList);
+    }
+
+    private void openSearchIfNotNull(ArrayList<Photo> tagHitList) throws IOException {
+        if (tagHitList.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.initOwner(Photos.window);
+            alert.setHeaderText("No Photo found");
+            alert.setContentText("No Photo found with the Search Criteria");
+            alert.showAndWait();
+            return;
+        }
+        openSearch(tagHitList);
+        checkBonx.setSelected(false);
     }
 }

@@ -84,4 +84,13 @@ public class Photo implements Serializable {
         }
         return sBuilder.toString();
     }
+
+    public boolean containsPropertiesOf(Tag tag) {
+        for (Tag t : tags) {
+            if (t.equals(tag)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

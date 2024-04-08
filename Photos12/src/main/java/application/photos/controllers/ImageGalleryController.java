@@ -136,7 +136,7 @@ public class ImageGalleryController {
     public void addImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.bmp", "*.gif", "*.png", "*.jpg"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.bmp", "*.gif", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = fileChooser.showOpenDialog(Photos.window);
         if (selectedFile != null) {
             Photo photo = user.searchAllPictures(selectedFile);
