@@ -31,6 +31,7 @@ public class User implements Serializable {
 
     private void createUserDirectory(String name) {
         File dir = new File(rootDir.getPath() + File.separator + name);
+        dir.mkdir();
     }
 
     public void writeUser() throws IOException {
