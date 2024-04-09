@@ -140,6 +140,14 @@ public class TagManagerController {
         alert.showAndWait();
     }
 
+    public void DoesntExist(){
+        Alert alert = new Alert((Alert.AlertType.INFORMATION));
+        alert.initOwner(Photos.window);
+        alert.setTitle("Tag Doesn't Exists");
+        alert.setHeaderText("The Tag Does Not Exist!");
+        alert.showAndWait();
+    }
+
     public void initializePresetChoiceBox(){
 
         tagNames.clear();
@@ -150,5 +158,24 @@ public class TagManagerController {
         tagObservableList = FXCollections.observableArrayList();
         tagObservableList.addAll(tagNames);
         tagChoiceBox.setItems(tagObservableList);
+    }
+
+    public void deleteTag() throws IOException {
+        String value = presetTagValue.getText();
+        String name = tagChoiceBox.getSelectionModel().getSelectedItem();
+
+        Tag temp = new Tag(name, value, false);
+
+        if(img.getTags().contains(temp)){
+            img.removeTag(temp);
+        }else{
+            DoesntExist();
+        }
+
+        user.writeUser();
+        imageGalleryController.showImage();
+        presetTagValue.clear();
+        tagChoiceBox.setValue(null);
+
     }
 }

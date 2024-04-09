@@ -38,7 +38,7 @@ public class Photo implements Serializable {
 
     public ArrayList<String> getAlbums() {return albums;}
 
-    public void removeTag() {}
+    public void removeTag(Tag tag) {tags.remove(tag);}
 
     public File getSrc() {
         return imgFile;

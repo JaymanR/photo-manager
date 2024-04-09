@@ -14,6 +14,7 @@ public class User implements Serializable {
     private ArrayList<Photo> pictures;
     private ArrayList<String> singleList;
     private ArrayList<String> multiList;
+    private int loginCount;
 
     public User (String name) {
         this.name = name;
@@ -21,6 +22,7 @@ public class User implements Serializable {
         pictures = new ArrayList<>();
         singleList = new ArrayList<>();
         multiList = new ArrayList<>();
+        loginCount = 0;
     }
 
     public String getUserName() {
@@ -29,9 +31,6 @@ public class User implements Serializable {
 
     private void createUserDirectory(String name) {
         File dir = new File(rootDir.getPath() + File.separator + name);
-        if (dir.mkdir()) {
-            System.out.println("Successfully created user directory for" + name);
-        }
     }
 
     public void writeUser() throws IOException {
@@ -41,7 +40,6 @@ public class User implements Serializable {
                 new FileOutputStream(storeDir + File.separator + name + ".dat")
         );
         oos.writeObject(this);
-        System.out.println("successfully stored user data");
     }
 
     public static ArrayList<User> readUsers() throws IOException, ClassNotFoundException {
@@ -49,7 +47,6 @@ public class User implements Serializable {
         String[] dirList = rootDir.list();
 
         if (dirList == null) {
-            System.out.println("No user data found");
             return null;
         }
         for (String d : dirList) {
@@ -61,7 +58,6 @@ public class User implements Serializable {
             User user = (User) ois.readObject();
             users.add(user);
         }
-        System.out.println("successfully extracted user data");
         return users;
     }
 
@@ -71,15 +67,10 @@ public class User implements Serializable {
 
         if (fileList != null) {
             for (File f : userDir.listFiles()) {
-                if (f.delete()) {
-                    System.out.println("Successfully deleted user file");
-                }
+                f.delete();
             }
         }
-
-        if (userDir.delete()) {
-            System.out.println("successfully deleted: " + dirName);
-        }
+        userDir.delete();
     }
 
     public boolean searchAlb(String albName) {
@@ -151,5 +142,12 @@ public class User implements Serializable {
 
     public void addMultiTag(String tag){if(!multiList.contains(tag)){multiList.add(tag);}}
 
+    public int getLoginCount() {
+        return loginCount;
+    }
+
+    public void incrementLoginCount() {
+        loginCount++;
+    }
 }
 

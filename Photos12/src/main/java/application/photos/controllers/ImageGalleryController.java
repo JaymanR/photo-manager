@@ -20,6 +20,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 import static application.photos.controllers.AlbumController.checkIfDuplicate;
@@ -191,7 +193,7 @@ public class ImageGalleryController {
     }
 
     public void addImageThumbnail(Photo p) throws FileNotFoundException {
-        Image image = new Image(new FileInputStream(p.getSrc()));
+        Image image = new Image((p.getSrc().toURI().toString()));
         ImageView photoImageView = new ImageView();
 
         photoImageView.setImage(image);
@@ -286,7 +288,6 @@ public class ImageGalleryController {
     }
 
     public void editCaption() throws IOException {
-        System.out.println("editCaption");
         String caption = giveCaptionDialog();
        if (caption != null) {
             selectedPhoto.editCaption(caption);

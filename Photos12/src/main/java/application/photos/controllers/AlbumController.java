@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,6 +61,16 @@ public class AlbumController {
     private boolean advanced;
 
     public void start(Stage stage, User user){
+        if (user.getUserName().equals("stock") && !user.searchAlb("stock") && user.getLoginCount() == 0){
+            File stockDir = new File("src/../data");
+            Album a = new Album("stock");
+            user.addAlbum(a);
+            if (stockDir.listFiles() != null) {
+                for (File f : stockDir.listFiles()) {
+                  a.addImage(new Photo(f.getAbsoluteFile()));
+                }
+            }
+        }
         this.user = user;
         initializeAlbums();
         advanced = false;
@@ -69,11 +80,18 @@ public class AlbumController {
         choices.add("OR");
         choices.add("And");
         choiceBonx.setItems(choices);
+        user.incrementLoginCount();
     }
 
     private void initializeAlbums() {
+        for (Album a : user.getAlbums()) {
+            a.getHighestDate();
+            a.getLowestDate();
+        }
         albumObsList = FXCollections.observableArrayList();
         albumObsList.addAll(user.getAlbums());
+
+
 
         TableColumn<Album, String> nameColumn = new TableColumn<>("Album");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("albumName"));
@@ -81,11 +99,19 @@ public class AlbumController {
         TableColumn<Album, Integer> photoCountColumn = new TableColumn<>("Photo Count");
         photoCountColumn.setCellValueFactory(new PropertyValueFactory<>("numPhotos"));
 
+        TableColumn<Album, String> date1Column = new TableColumn<>("Earliest Date");
+        date1Column.setCellValueFactory(new PropertyValueFactory<>("lowestD"));
+
+        TableColumn<Album, String> date2Column = new TableColumn<>("Latest Date");
+        date2Column.setCellValueFactory(new PropertyValueFactory<>("highestD"));
+
         table = new TableView<>();
         table.setItems(albumObsList);
-        table.getColumns().addAll(nameColumn, photoCountColumn);
+        table.getColumns().addAll(nameColumn, photoCountColumn, date1Column, date2Column);
 
         borderPane.setCenter(table);
+        table.setPrefHeight(TableView.USE_COMPUTED_SIZE);
+        table.setPrefWidth(TableView.USE_COMPUTED_SIZE);
     }
 
     public void openAlbum() throws IOException {

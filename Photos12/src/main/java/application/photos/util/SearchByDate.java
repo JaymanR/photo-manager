@@ -13,7 +13,6 @@ public class SearchByDate {
             if((p.getDate().getTime().after(date1.getTime()) || p.getDate().getTime().equals(date1.getTime())) && (p.getDate().getTime().before(date2.getTime()) || p.getDate().getTime().equals(date2.getTime()))){
                 temp.add(p);
             }
-            System.out.println(p.getAlbums());
         }
         return temp;
     }
