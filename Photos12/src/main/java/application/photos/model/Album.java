@@ -26,6 +26,7 @@ public class Album implements Serializable {
     }
 
     public void getLowestDate() {
+        if (lowestD.equals("N/A")) {return;}
         Calendar lowest = photos.getFirst().getDate();
         for(Photo p: photos){
             if(p.getDate().before(lowest)){
@@ -38,6 +39,7 @@ public class Album implements Serializable {
     }
 
     public void getHighestDate(){
+        if (highestD.equals("N/A")) {return;}
         Calendar highest = photos.getFirst().getDate();
         for(Photo p: photos){
             if(p.getDate().after(highest)){
