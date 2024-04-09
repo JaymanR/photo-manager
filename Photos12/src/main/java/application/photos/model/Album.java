@@ -21,6 +21,8 @@ public class Album implements Serializable {
         this.albumName = albumName;
         photos = new ArrayList<>();
         numPhotos = 0;
+        lowestD = "N/A";
+        highestD = "N/A";
     }
 
     public void getLowestDate() {
