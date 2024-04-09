@@ -1,0 +1,5 @@
+module:application.photos
+application.photos
+application.photos.controllers
+application.photos.model
+application.photos.util

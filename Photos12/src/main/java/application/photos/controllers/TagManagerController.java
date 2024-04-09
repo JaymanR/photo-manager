@@ -16,26 +16,48 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Manages the tags and the preset tags for the images
+ */
 public class TagManagerController {
+    /**
+     * Choice box that holds the preset Tag names
+     */
     @FXML
     private ChoiceBox<String> tagChoiceBox;
+    /**
+     * Textfield for the value of a tag for an image
+     */
     @FXML
     private TextField presetTagValue;
+    /**
+     * Textfield to input a name of the new tag
+     */
     @FXML
     private TextField newTagName;
+    /**
+     * Textfield to input the value of the new tag
+     */
     @FXML
     private TextField newTagValue;
+    /**
+     * Check box to show if a tag is single value
+     */
     @FXML
     private CheckBox newTagSingleValue;
 
+    /**
+     * ArrayList of tag names for the preset choice box
+     */
     private ArrayList<String> tagNames;
 
     private Stage stage;
     private User user;
     private Photo img;
-
+    /**
+     * Observable list for tags
+     */
     ObservableList<String> tagObservableList;
-
     ImageGalleryController imageGalleryController;
 
     public void start(Stage stage, User user, Photo img, ImageGalleryController imageGalleryController) {
@@ -48,6 +70,10 @@ public class TagManagerController {
         initializePresetChoiceBox();
     }
 
+    /**
+     * Adds tag to image based on the name and value selected by user
+     * @throws IOException
+     */
     public void addTagPreset() throws IOException {
         String value = presetTagValue.getText();
 
@@ -75,6 +101,10 @@ public class TagManagerController {
 
     }
 
+    /**
+     * Adds tag to image based on name and value inputted by user
+     * @throws IOException
+     */
     public void addNewTag() throws IOException {
         if (newTagName.getText().isEmpty() || newTagValue.getText().isEmpty()) {
             warningNoInput();
@@ -105,10 +135,16 @@ public class TagManagerController {
         newTagSingleValue.setSelected(false);
     }
 
+    /**
+     * Closes the current stage
+     */
     public void cancel() {
         stage.close();
     }
 
+    /**
+     * Warns user that there is no input for tag name or value
+     */
     public void warningNoInput() {
         Alert alert = new Alert((Alert.AlertType.INFORMATION));
         alert.initOwner(Photos.window);
@@ -116,6 +152,10 @@ public class TagManagerController {
         alert.setHeaderText("Please input all required fields.");
         alert.showAndWait();
     }
+
+    /**
+     * Warns user if an existing tag already exists
+     */
     public void duplicateTagAlert() {
         Alert alert = new Alert((Alert.AlertType.INFORMATION));
         alert.initOwner(Photos.window);
@@ -124,6 +164,9 @@ public class TagManagerController {
         alert.showAndWait();
     }
 
+    /**
+     * Warns user that the tag is single value and there can only be one per image
+     */
     public void warningSingleValueAlert() {
         Alert alert = new Alert((Alert.AlertType.INFORMATION));
         alert.initOwner(Photos.window);
@@ -132,6 +175,9 @@ public class TagManagerController {
         alert.showAndWait();
     }
 
+    /**
+     * Warns user that a preset for the inputted name already exists
+     */
     public void presetExists(){
         Alert alert = new Alert((Alert.AlertType.INFORMATION));
         alert.initOwner(Photos.window);
@@ -140,6 +186,9 @@ public class TagManagerController {
         alert.showAndWait();
     }
 
+    /**
+     * Warns user that the tag does not exist
+     */
     public void DoesntExist(){
         Alert alert = new Alert((Alert.AlertType.INFORMATION));
         alert.initOwner(Photos.window);
@@ -148,6 +197,9 @@ public class TagManagerController {
         alert.showAndWait();
     }
 
+    /**
+     * Initializes the preset Choice box
+     */
     public void initializePresetChoiceBox(){
 
         tagNames.clear();
@@ -160,6 +212,10 @@ public class TagManagerController {
         tagChoiceBox.setItems(tagObservableList);
     }
 
+    /**
+     * Deletes a tag assigned to an image, based on the value input
+     * @throws IOException
+     */
     public void deleteTag() throws IOException {
         String value = presetTagValue.getText();
         String name = tagChoiceBox.getSelectionModel().getSelectedItem();

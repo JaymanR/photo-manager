@@ -16,48 +16,94 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Manages the Ablums list and the events fired in within the album view
+ *
+ * @author Jayman Rana and Dev Patel
+ */
 public class AlbumController {
+    /**
+     * Border Pane that hold the TableView
+     */
     @FXML
     private BorderPane borderPane;
+    /**
+     * Tableview that holds all the albums
+     */
     private TableView<Album> table;
+    /**
+     * The user who is logged in
+     */
     private User user;
+    /**
+     * Observable List of albums
+     */
     private ObservableList<Album> albumObsList;
-
+    /**
+     * Textfield for the first date for searching
+     */
     @FXML
     private TextField firstdate;
+    /**
+     * Textfield for the second date for searching
+     */
     @FXML
     private TextField lastdate;
+    /**
+     * Label for warnings
+     */
     @FXML
     private Label warning;
 
+    /**
+     * Vbox that holds the advanced components
+     */
     @FXML
     private VBox advancedVbox;
+    /**
+     * Textfield for the Tag name for searching
+     */
     @FXML
     private TextField tagNameField1;
+    /**
+     * Textfield for the Tag value for searching
+     */
     @FXML
     private TextField tagValueField1;
-
+    /**
+     * Holds the conjunction and disjuntion for Tag searching
+     */
     @FXML
     private ChoiceBox<String> choiceBonx;
+    /**
+     * Check box for advanced
+     */
     @FXML
     private CheckBox checkBonx;
-
+    /**
+     * Textfield for the second Tag name for searching
+     */
     @FXML
     private TextField tagNameField2;
+    /**
+     * Textfield for the second Tag value for searching
+     */
     @FXML
     private TextField tagValueField2;
+    /**
+     * Search button to initiate the searching methods
+     */
     @FXML
     private Button searchBtn;
-    @FXML
-    private Button advancedSearchBtn;
-
+    /**
+     * Boolean for the advanced section
+     */
     private boolean advanced;
 
     public void start(Stage stage, User user){
@@ -83,6 +129,9 @@ public class AlbumController {
         user.incrementLoginCount();
     }
 
+    /**
+     * Initializes the Albums to the updated version
+     */
     private void initializeAlbums() {
         for (Album a : user.getAlbums()) {
             a.getHighestDate();
@@ -114,6 +163,10 @@ public class AlbumController {
         table.setPrefWidth(TableView.USE_COMPUTED_SIZE);
     }
 
+    /**
+     * Opens the selected album
+     * @throws IOException
+     */
     public void openAlbum() throws IOException {
         Album album = table.getSelectionModel().getSelectedItem();
 
@@ -129,6 +182,10 @@ public class AlbumController {
         Photos.getStage().setScene(scene);
     }
 
+    /**
+     * Creates a new Ablum
+     * @throws IOException
+     */
     public void createAlbum() throws IOException {
         TextInputDialog dialog = new TextInputDialog();
         dialog.initOwner(Photos.window);
@@ -161,11 +218,18 @@ public class AlbumController {
         user.writeUser();
     }
 
+    /**
+     * Logs the user out
+     */
     public void logout() {
         Photos.getStage().setTitle("Photos");
         Photos.changeScene(Photos.login);
     }
 
+    /**
+     * Deletes the selected album
+     * @throws IOException
+     */
     public void delete() throws IOException{
         Album albName = table.getSelectionModel().getSelectedItem();
         user.delAlb(albName);
@@ -182,6 +246,10 @@ public class AlbumController {
         user.writeUser();
     }
 
+    /**
+     * Renames the selected album
+     * @throws IOException
+     */
     public void rename() throws IOException{
         Album albName = table.getSelectionModel().getSelectedItem();
 
@@ -209,6 +277,11 @@ public class AlbumController {
         user.writeUser();
     }
 
+    /**
+     * Checks for duplicate albums in the list
+     * @param result List of ablum names for a specific user
+     * @param user Owner of the albums
+     */
     protected static void checkIfDuplicate(Optional<String> result, User user) {
         if(result.isPresent() && user.searchAlb(result.get().toLowerCase())){
             Alert alert = new Alert((Alert.AlertType.INFORMATION));
@@ -220,6 +293,11 @@ public class AlbumController {
         }
     }
 
+    /**
+     * Opens the searched photos in a separate stage
+     * @param list List of users that get searched
+     * @throws IOException
+     */
     public void openSearch(ArrayList<Photo> list) throws IOException{
 
         FXMLLoader loader = new FXMLLoader();
@@ -236,6 +314,11 @@ public class AlbumController {
         Photos.getStage().setTitle("Search Results");
         Photos.getStage().setScene(scene);
     }
+
+    /**
+     * Begins searching based on date inputs
+     * @throws IOException
+     */
 
     public void searchbydate() throws IOException{
 
@@ -317,6 +400,9 @@ public class AlbumController {
 
     }
 
+    /**
+     * Shows or hides the Advanced view
+     */
     public void initializeAdvancedView() {
         searchBtn.setVisible(advanced);
         //searchBtn.setManaged(advanced);
@@ -325,6 +411,9 @@ public class AlbumController {
         advanced = !advanced;
     }
 
+    /**
+     * Alert for invalid input
+     */
     public void invalidInputAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initOwner(Photos.window);
@@ -332,6 +421,11 @@ public class AlbumController {
         alert.setContentText("Please give valid input");
         alert.showAndWait();
     }
+
+    /**
+     * Overloaded method that takes an input and outputs the error message based on the input
+     * @param content Input that is integrated into the error message
+     */
     public void invalidInputAlert(String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initOwner(Photos.window);
@@ -339,6 +433,11 @@ public class AlbumController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    /**
+     * Begins searching based on Tag inputs
+     * @throws IOException
+     */
     public void searchByTag() throws IOException {
         if (tagNameField1.getText().isBlank() || tagValueField1.getText().isBlank()) {
             invalidInputAlert();
@@ -355,6 +454,10 @@ public class AlbumController {
         openSearchIfNotNull(tagHitPhotoList);
     }
 
+    /**
+     * Begins searching based on the advanced tag inputs
+     * @throws IOException
+     */
     public void advancedTagSearch() throws IOException {
         initializeAdvancedView();
 
@@ -380,18 +483,20 @@ public class AlbumController {
         Tag tag1 = new Tag(tag1Name, tag1Value, false);
         Tag tag2 = new Tag(tag2Name, tag2Value, false);
 
-        boolean bool = false;
+        boolean bool = choiceBonx.getValue().equals("OR");
 
         //OR is true AND is false
-        if (choiceBonx.getValue().equals("OR")) {
-            bool = true;
-        }
 
         ArrayList<Photo> tagPhotoHitList= SearchByTag.searchByCombination(tag1, tag2, bool, user);
 
         openSearchIfNotNull(tagPhotoHitList);
     }
 
+    /**
+     * opens seperate stage and shows the photos that were searched
+     * @param tagHitList ArrayList of Photos that get searched
+     * @throws IOException
+     */
     private void openSearchIfNotNull(ArrayList<Photo> tagHitList) throws IOException {
         if (tagHitList.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -12,23 +12,39 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Manages the admin view and the events fired in admin view
+ *
+ * @author Jayman Rana and Dev Patel
+ */
 public class AdminController {
-    @FXML
-    private Button logout;
-    @FXML
-    private Button createUser;
+    /**
+     * Button to delete a User
+     */
     @FXML
     private Button deleteUser;
+    /**
+     * List of users
+     */
     @FXML
     private ListView<String> listView;
-
+    /**
+     * Observable List of users
+     */
     private ObservableList<String> obsList;
 
-    public void logout() throws IOException{
+    /**
+     * Logs the user out
+     * @throws IOException
+     */
+    public void logout() throws IOException {
         Photos.changeScene(Photos.login);
     }
 
-    //Note for later : if user already exists give a warning
+    /**
+     * Creates a new user
+     * @throws IOException
+     */
     public void createUser() throws IOException{
         TextInputDialog dialog = new TextInputDialog();
         dialog.initOwner(Photos.window);
@@ -44,7 +60,10 @@ public class AdminController {
         }
     }
 
-
+    /**
+     * Deletes a selected User
+     * @throws IOException
+     */
     public void deleteUser() throws IOException {
         String userName = listView.getSelectionModel().getSelectedItem();
         obsList.remove(userName);

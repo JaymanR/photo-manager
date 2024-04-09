@@ -9,20 +9,32 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 
+/**
+ * Manages the login view and the event fired
+ */
 public class LoginController {
-
+    /**
+     * Button used to log in
+     */
     @FXML
     private Button login;
-
+    /**
+     * Textfield where you enter a username
+     */
     @FXML
     private TextField username;
-
+    /**
+     * Label for the warning text
+     */
     @FXML
     private Label warning;
 
+    /**
+     * Logs into user based on the name inputted
+     * @throws IOException
+     */
     public void login() throws IOException {
         String name = username.getText().toLowerCase();
 
@@ -50,6 +62,10 @@ public class LoginController {
         username.clear();
     }
 
+    /**
+     * Loads the admin view from the fxml file and displays it
+     * @throws IOException
+     */
     public void admin() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/application/photos/view/admin.fxml"));
@@ -63,6 +79,12 @@ public class LoginController {
         Photos.changeScene(scene);
     }
 
+    /**
+     * Loads
+     * @param name Name of the user
+     * @param user User instance of the user
+     * @throws IOException
+     */
     public void user(String name, User user) throws IOException {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/application/photos/view/album.fxml"));

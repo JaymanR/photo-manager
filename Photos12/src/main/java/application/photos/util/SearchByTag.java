@@ -5,10 +5,19 @@ import application.photos.model.Photo;
 import application.photos.model.Tag;
 import application.photos.model.User;
 
+/**
+ * This class is a utility Class that provides a search feature based on Tags.
+ *
+ * @author Dev Patel
+ */
 public class SearchByTag {
 
-    private ArrayList<Photo> temp;
-
+    /**
+     * Searches All user photo for the Name : Value pair and returns all photos that contain said pair.
+     * @param searchTag Tag to search for
+     * @param user User instance
+     * @return ArrayList of Photo
+     */
     public static ArrayList<Photo> singleTagSearch(Tag searchTag, User user) {
         ArrayList<Photo> hitList = new ArrayList<>();
         for (Photo p : user.getPictures()) {
@@ -23,6 +32,14 @@ public class SearchByTag {
         return hitList;
     }
 
+    /**
+     * Searches all user photo for disjunction/conjunction of Two tags
+     * @param tag1 Tag instance
+     * @param tag2 Tag instance
+     * @param bool Conjunction ( True ) or Disjunction ( False)
+     * @param user User instance
+     * @return ArrayList of Photo
+     */
     public static ArrayList<Photo> searchByCombination(Tag tag1, Tag tag2, boolean bool, User user) {
         ArrayList<Photo> hitList = new ArrayList<>();
         //if true = OR combination

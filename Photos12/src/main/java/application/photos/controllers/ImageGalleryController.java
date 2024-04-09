@@ -3,7 +3,6 @@ package application.photos.controllers;
 import application.photos.Photos;
 import application.photos.model.Album;
 import application.photos.model.Photo;
-import application.photos.model.Tag;
 import application.photos.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,15 +17,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.*;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
-
 import static application.photos.controllers.AlbumController.checkIfDuplicate;
 
+/**
+ * This class manages all the events fired in the Image Gallery UI and initializes the Gallery with user images.
+ *
+ * @author Jayman Rana, Dev Patel
+ */
 public class ImageGalleryController {
+    /**
+     * size of the image thumbnail
+     */
     private static final double THUMBNAIL_SIZE = 100;
 
     @FXML
@@ -83,6 +86,10 @@ public class ImageGalleryController {
         }
     }
 
+    /**
+     * Initializes the gallery to display search results
+     * @param bool true if the photos are searched, false otherwise.
+     */
     public void searchView(boolean bool) {
         addPhotoBox.setVisible(bool);
         addPhotoBox.setManaged(bool);
@@ -96,6 +103,10 @@ public class ImageGalleryController {
         }
     }
 
+    /**
+     * Initializes all the Images in the particular album or from the search result.
+     * @throws FileNotFoundException
+     */
     public void initializeImages() throws FileNotFoundException {
         if (currentAlbum.getNumPhotos() > 0) {
             for (Photo p : currentAlbum.getImages()) {
@@ -105,6 +116,10 @@ public class ImageGalleryController {
         hideDisplayArea();
     }
 
+    /**
+     * creates an Album based on the search result
+     * @throws IOException
+     */
     public void createAlbum() throws IOException {
         TextInputDialog dialog = new TextInputDialog();
         dialog.initOwner(Photos.window);
@@ -134,7 +149,10 @@ public class ImageGalleryController {
     }
 
 
-
+    /**
+     * Adds an image from User.
+     * @throws IOException
+     */
     public void addImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
@@ -164,6 +182,10 @@ public class ImageGalleryController {
         }
     }
 
+    /**
+     * copies the selected photo into another album.
+     * @throws IOException
+     */
     public void copyPhoto() throws IOException {
         String selection = copyToCB.getSelectionModel().getSelectedItem();
         Album targetAlbum = user.getAlbum(selection);
@@ -176,6 +198,10 @@ public class ImageGalleryController {
         }
     }
 
+    /**
+     * moves the selected Photo into specified album
+     * @throws IOException
+     */
     public void movePhoto() throws IOException {
         String selection = moveToCB.getSelectionModel().getSelectedItem();
         Album targetAlbum = user.getAlbum(selection);
@@ -192,6 +218,11 @@ public class ImageGalleryController {
         }
     }
 
+    /**
+     * Helper method that adds image thumbnail into the gallery.
+     * @param p Photo instance
+     * @throws FileNotFoundException
+     */
     public void addImageThumbnail(Photo p) throws FileNotFoundException {
         Image image = new Image((p.getSrc().toURI().toString()));
         ImageView photoImageView = new ImageView();
@@ -215,7 +246,6 @@ public class ImageGalleryController {
         vBox.setPrefHeight(THUMBNAIL_SIZE);
         vBox.setMaxWidth(THUMBNAIL_SIZE);
         vBox.setAlignment(Pos.CENTER);
-        vBox.setId(p.getphotoName());
         vBox.setOnMouseClicked(e -> {
             e.consume();
             Object oSource = e.getSource();
@@ -243,6 +273,9 @@ public class ImageGalleryController {
         flowPane.getChildren().add(vBox);
     }
 
+    /**
+     * Generates alert for duplicate photos
+     */
     public void duplicatePhotoAlert() {
         Alert alert = new Alert((Alert.AlertType.INFORMATION));
         alert.initOwner(Photos.window);
@@ -251,11 +284,18 @@ public class ImageGalleryController {
         alert.showAndWait();
     }
 
+    /**
+     * Method that goes back to the previous scene.
+     */
     public void back(){
         Photos.getStage().setTitle("Albums");
         Photos.getStage().setScene(albumsScene);
     }
 
+    /**
+     * Deletes the selected Image from the album.
+     * @throws IOException
+     */
     public void deletePhoto() throws IOException {
         currentAlbum.removeImage(selectedPhoto);
         albumObservableList.set(albumObservableList.indexOf(currentAlbum), currentAlbum);
@@ -278,6 +318,10 @@ public class ImageGalleryController {
         user.writeUser();
     }
 
+    /**
+     * generates a dialog to receive caption input
+     * @return String or Null
+     */
     public String giveCaptionDialog() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.initOwner(Photos.window);
@@ -287,6 +331,10 @@ public class ImageGalleryController {
         return result.orElse(null);
     }
 
+    /**
+     * Edits the caption of the selected Image.
+     * @throws IOException
+     */
     public void editCaption() throws IOException {
         String caption = giveCaptionDialog();
        if (caption != null) {
@@ -298,6 +346,10 @@ public class ImageGalleryController {
         }
     }
 
+    /**
+     * opens and loads tag manager to add and delete tags from the selected photo
+     * @throws IOException
+     */
     public void manageTags() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/application/photos/view/tag-manager.fxml"));
@@ -315,6 +367,10 @@ public class ImageGalleryController {
         stage.show();
     }
 
+    /**
+     * opens and loads the slideshow UI when the button is clicked.
+     * @throws IOException
+     */
     public void slideshow() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/application/photos/view/slideshow.fxml"));
@@ -332,6 +388,9 @@ public class ImageGalleryController {
         stage.show();
     }
 
+    /**
+     * Hides the separate display area when user goes out of focus.
+     */
     public void hideDisplayArea() {
         if (prevThumbnail != null) {
             prevThumbnail.setOpacity(1.0);
@@ -341,6 +400,10 @@ public class ImageGalleryController {
         selectedPhoto = null;
     }
 
+    /**
+     * shows the image in a separate display area when selected.
+     * @throws FileNotFoundException
+     */
     public void showImage() throws FileNotFoundException {
 
         if (selectedPhoto != null) {
