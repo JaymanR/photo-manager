@@ -495,7 +495,7 @@ public class AlbumController {
     /**
      * opens seperate stage and shows the photos that were searched
      * @param tagHitList ArrayList of Photos that get searched
-     * @throws IOException
+     * @throws IOException throws exception
      */
     private void openSearchIfNotNull(ArrayList<Photo> tagHitList) throws IOException {
         if (tagHitList.isEmpty()) {

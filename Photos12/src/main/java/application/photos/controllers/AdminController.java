@@ -35,7 +35,7 @@ public class AdminController {
 
     /**
      * Logs the user out
-     * @throws IOException
+     * @throws IOException throw exception
      */
     public void logout() throws IOException {
         Photos.changeScene(Photos.login);
@@ -43,7 +43,7 @@ public class AdminController {
 
     /**
      * Creates a new user
-     * @throws IOException
+     * @throws IOException throws exception
      */
     public void createUser() throws IOException{
         TextInputDialog dialog = new TextInputDialog();
@@ -62,7 +62,7 @@ public class AdminController {
 
     /**
      * Deletes a selected User
-     * @throws IOException
+     * @throws IOException throws Exception
      */
     public void deleteUser() throws IOException {
         String userName = listView.getSelectionModel().getSelectedItem();

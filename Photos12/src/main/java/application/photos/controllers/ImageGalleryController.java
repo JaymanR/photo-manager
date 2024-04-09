@@ -105,7 +105,7 @@ public class ImageGalleryController {
 
     /**
      * Initializes all the Images in the particular album or from the search result.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException throws exception
      */
     public void initializeImages() throws FileNotFoundException {
         if (currentAlbum.getNumPhotos() > 0) {
